@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Number Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #2c3e50;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            background: #34495e;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        input, select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #1abc9c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        button:hover {
+            background-color: #16a085;
+        }
+
+        .result {
+            margin-top: 20px;
+        }
+
+        .slider-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .slider {
+            width: calc(100% - 50px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Random Number Generator</h1>
+
+        <label for="min">Min:</label>
+        <input type="number" id="min" placeholder="0" value="0">
+
+        <label for="max">Max:</label>
+        <input type="number" id="max" placeholder="100" value="100">
+
+        <label for="numResults">Number of results:</label>
+        <div class="slider-container">
+            <input type="number" id="numResults" placeholder="5" value="5" min="1" max="10">
+        </div>
+
+        <button onclick="generateNumbers()">Generate Numbers</button>
+
+        <div class="result">
+            <p id="numbers">Numbers: N/A</p>
+            <p id="sum">Sum: N/A</p>
+            <p id="average">Average: N/A</p>
+        </div>
+    </div>
+
+    <script>
+        function generateNumbers() {
+            const min = parseInt(document.getElementById('min').value);
+            const max = parseInt(document.getElementById('max').value);
+            const numResults = parseInt(document.getElementById('numResults').value);
+            
+            if (isNaN(min) || isNaN(max) || isNaN(numResults) || min >= max || numResults <= 0) {
+                alert("Please enter valid input values.");
+                return;
+            }
+
+            const numbers = [];
+            for (let i = 0; i < numResults; i++) {
+                const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+                numbers.push(randomNum);
+            }
+
+            const sum = numbers.reduce((a, b) => a + b, 0);
+            const average = sum / numbers.length;
+
+            document.getElementById('numbers').textContent = `Numbers: ${numbers.join(', ')}`;
+            document.getElementById('sum').textContent = `Sum: ${sum}`;
+            document.getElementById('average').textContent = `Average: ${average.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
